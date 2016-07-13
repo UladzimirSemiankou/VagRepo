@@ -251,6 +251,7 @@ curl -IL 192.168.56.10
 >HTTP/1.1 200 OK
 
 - tomcat was working fine
+
 ###4. Checked error redirections
 ```
 curl -sL -w "%{http_code}" 192.168.56.10/123
@@ -263,6 +264,7 @@ service httpd restart
 curl -sL -w "%{http_code}" 192.168.56.10/123
 ```
 - redirection worked
+
 ###5. Checked iptables
 ```
 iptables -L -n
@@ -293,6 +295,7 @@ sed -i 's/RELATED/RELATED,ESTABLISHED/' /etc/sysconfig/iptables
 service iptables start
 ```
 - success
+
 ###6. Added httpd and tomcat to autostart
 ```
 chkconfig httpd on
