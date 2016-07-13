@@ -1,11 +1,11 @@
 # Troubleshooting Semenkov V.V.
 
-######Installed VM
+###Installed VM
 ```
 vagrant up
 ```
 
-######1. Checked url from server and client sides
+###1. Checked url from server and client sides
 ```
 curl -IL 192.168.56.10
 ```
@@ -41,7 +41,7 @@ curl -IL 192.168.56.10
 
 - redirection ends at mntlab
 
-######2. Checking redirections
+###2. Checked redirections
 *httpd.conf*
 - checked pass to error and access logs and inclusion of other logs and confs
 - noticed redirection to mntlab
@@ -119,7 +119,7 @@ curl -IL 192.168.56.10
 
 >[Wed Jul 13 09:40:42 2016]tomcat.worker 192.168.56.10 0.101937
 
-- worker configuration is bad
+- worker configuration was bad
 *worker.properties*
 - unknown worker worker-jk@ppname and ip
 ```
@@ -145,9 +145,10 @@ curl -IL 192.168.56.10
 >Connection: close
 
 >Content-Type: text/html; charset=UTF-8
+
 - service still unavailable
 
-######3. Checked if tomcat is running
+###3. Checked if tomcat is running
 ```
 ps aux | grep tomcat
 ```
@@ -183,6 +184,7 @@ su - tomcat
 echo $CATALINA_HOME
 ```
 >/tmp
+
 - path was wrong
 - checked bash profile
 - no CATALINA_HOME defined
@@ -195,6 +197,7 @@ service tomcat start
 >touch: cannot touch `/opt/apache/tomcat/current/logs/catalina.out': Permission denied
 
 >/opt/apache/tomcat//current/bin/catalina.sh: line 387: /opt/apache/tomcat/current/logs/catalina.out: Permission denied
+
 - had no access to logs directory
 - checked if directory existed and what permissions it had
 ```
@@ -217,6 +220,7 @@ service tomcat start
 >Using CLASSPATH:       /opt/apache/tomcat/current/bin/bootstrap.jar:/opt/apache/tomcat/current/bin/tomcat-juli.jar
 
 >Tomcat started.
+
 ```
 ps aux | grep tomcat
 ```
@@ -245,8 +249,9 @@ ps aux | grep tomcat
 curl -IL 192.168.56.10
 ```
 >HTTP/1.1 200 OK
+
 - tomcat was working fine
-- checked error redirections
+###4. Checked error redirections
 ```
 curl -sL -w "%{http_code}" 192.168.56.10/123
 ```
@@ -258,7 +263,7 @@ service httpd restart
 curl -sL -w "%{http_code}" 192.168.56.10/123
 ```
 - redirection worked
-- checked iptables
+###5. Checked iptables
 ```
 iptables -L -n
 ```
@@ -288,7 +293,7 @@ sed -i 's/RELATED/RELATED,ESTABLISHED/' /etc/sysconfig/iptables
 service iptables start
 ```
 - success
-- added httpd and tomcat to autostart
+###6. Added httpd and tomcat to autostart
 ```
 chkconfig httpd on
 chkconfig tomcat on
